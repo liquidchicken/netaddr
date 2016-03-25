@@ -536,7 +536,6 @@ class Tree
 #
     def remove!(cidr)
         removed = false
-        found = nil
 
         # validate object
         if ( !cidr.kind_of?(NetAddr::CIDR) )

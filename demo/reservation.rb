@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../lib/netaddr'
-require 'byebug'; byebug
 
 net = NetAddr::Subnet.new('10.96.0.0/12')
 net.allocate(16, 'qa')
@@ -11,6 +10,8 @@ net.allocate(15, 'fifteen')
 net.allocate(16, 'sixteen')
 net.allocate(17, 'seventeen')
 net.reserve('10.111.0.0/16', 'test_111_16')
+
+# This blows it up
 net.reserve('10.97.0.0/16', 'BOOM!!!')
 
 net.dump

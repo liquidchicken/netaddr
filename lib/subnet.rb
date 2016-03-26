@@ -17,7 +17,35 @@ module NetAddr
       @allocated
     end
 
-    def allocate(bits, name = 'VPC')
+    def reserve(cidr, name = 'GENERIC_NETWORK')
+      if @cidr == cidr             # We found our subnet
+        if @left.nil? and @right.nil? # there are no children
+          @name = name
+          @allocated = true
+          return @cidr
+        else                          # There are children, so go back up
+          raise StandardError, "This subnet is already allocated #{cidr}."
+        end
+      elsif not @cidr.contains?(cidr)
+        return false
+      elsif allocated?                   # This subnet is taken
+        return false
+      end
+
+      @left = Subnet.new(split_net[:left]) if @left.nil?
+      if reservation = @left.reserve(cidr, name)
+        return reservation
+      end
+
+      @right = Subnet.new(split_net[:right]) if @right.nil?
+      if reservation = @right.reserve(cidr, name)
+        return reservation
+      end
+
+      false
+    end
+
+    def allocate(bits, name = 'GENERIC_NETWORK')
       if allocated?                   # This subnet is taken
         return false
       elsif @bits == bits             # This subnet is the right size, and
@@ -29,25 +57,17 @@ module NetAddr
           return false
         end
       elsif bits <= @bits
-        raise ArgumentError, "Subnet must be smaller than VPC"
-      elsif bits > 28
-        raise ArgumentError, "AWS does not support subnets smaller than /28"
+        raise ArgumentError, "Subnet must be smaller than parent"
+      elsif bits > 30
+        raise ArgumentError, "Subnets smaller than /30 are not viable."
       end
 
-      if @left.nil?
-        @left = Subnet.new(split_net[:left])
-      end
-
-      #return true if @left.allocate(bits, name)
+      @left = Subnet.new(split_net[:left]) if @left.nil?
       if cidr = @left.allocate(bits, name)
         return cidr
       end
 
-      if @right.nil?
-        @right = Subnet.new(split_net[:right])
-      end
-
-      #return true if @right.allocate(bits, name)
+      @right = Subnet.new(split_net[:right]) if @right.nil?
       if cidr = @right.allocate(bits, name)
         return cidr
       end

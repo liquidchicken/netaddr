@@ -19,7 +19,7 @@ module NetAddr
 
   class Foo
     def self.version
-      @version = '1.6.0'
+      @@version = '1.6.0'
     end
   end
 

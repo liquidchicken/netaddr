@@ -2,8 +2,8 @@
 # install with: netaddr*.gem
 Gem::Specification.new do |s|
     s.name      =   "netaddr"
-    s.version   =   "1.6.2"
-    s.date      =   "2016-03-25"
+    s.version   =   "1.6.3"
+    s.date      =   "2016-04-28"
     s.author    =   "Dustin Spinhirne"
     s.summary   =   "A package for manipulating network addresses."
     s.files = Dir['lib/*.rb'] + Dir['test/*']

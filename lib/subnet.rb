@@ -42,7 +42,7 @@ module NetAddr
         return reservation
       end
 
-      raise StandardError, 'Unknown error: could not reserve CIDR #{cidr}'
+      raise StandardError, "Unknown error: could not reserve CIDR #{cidr}"
     end
 
     def allocate(bits, name = 'GENERIC_NETWORK')
@@ -72,7 +72,7 @@ module NetAddr
         return cidr
       end
 
-      raise StandardError, 'No space available for subnet of size #{bits}'
+      raise StandardError, "No space available for subnet of size #{bits}"
     end
 
     def split_net

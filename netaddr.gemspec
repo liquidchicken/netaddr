@@ -2,7 +2,7 @@
 # install with: netaddr*.gem
 Gem::Specification.new do |s|
     s.name      =   "netaddr"
-    s.version   =   "1.6.0"
+    s.version   =   "1.6.1"
     s.date      =   "2016-03-25"
     s.author    =   "Dustin Spinhirne"
     s.summary   =   "A package for manipulating network addresses."

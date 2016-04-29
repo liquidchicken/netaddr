@@ -16,11 +16,8 @@ require File.join(File.dirname(__FILE__), 'eui.rb')
 require File.join(File.dirname(__FILE__), 'subnet.rb')
 
 module NetAddr
-
-  class Foo
-    def self.version
-      @@version = '1.6.0'
-    end
+  def self.version
+    @@version = '1.6.1'
   end
 
   class BoundaryError < StandardError #:nodoc:

@@ -19,7 +19,7 @@ module NetAddr
 
     def reserve(cidr, name = 'GENERIC_NETWORK')
       if @cidr == cidr             # We found our subnet
-        if @left.nil? and @right.nil? # there are no children
+        if @left.nil? and @right.nil? and not allocated? # there are no children
           @name = name
           @allocated = true
           return @cidr
